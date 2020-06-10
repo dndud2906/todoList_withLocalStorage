@@ -8,13 +8,12 @@ import { useTodoContext } from './context'
 function Todo() {
   const { todos, setTodos, setId } = useTodoContext()
   useEffect(() => {
-    const todoList = localStorage.getItem('todos')
+    const todoList = JSON.parse(localStorage.getItem('todos'))
 
-    if ((todoList !== null) & (todoList !== '[]')) {
-      const todosArr = JSON.parse(todoList)
-      const LASTIdx = todosArr.length - 1
-      setTodos(todosArr)
-      setId(todosArr[LASTIdx].id + 1)
+    if (todoList !== null && todoList.length > 0) {
+      const LASTIdx = todoList.length - 1
+      setTodos(todoList)
+      setId(todoList[LASTIdx].id + 1)
     } else {
       console.log('empty')
     }
