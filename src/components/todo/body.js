@@ -9,9 +9,19 @@ function Body() {
   }
 
   const handleUpdateStatus = (todo) => {
-    todo.isDone = !todo.isDone
-    localStorage.setItem('todos', JSON.stringify(todos))
-    setTodos(JSON.parse(localStorage.getItem('todos')))
+    const updatedTodo = { ...todo, isDone: !todo.isDone }
+
+    const updatedTodos = todos.map((mapTodo) => {
+      let arr = {}
+      if (mapTodo === todo) {
+        mapTodo = updatedTodo
+        arr = mapTodo
+      } else {
+        arr = mapTodo
+      }
+      return arr
+    })
+    setTodos(updatedTodos)
   }
   return (
     <div>
