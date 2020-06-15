@@ -11,6 +11,26 @@ export function TodoContextProvider({ children }) {
   const [filter, setFilter] = useState('전체')
 
   useEffect(() => {
+    const storage = localStorage.getItem('todos')
+    const todoList = JSON.parse(storage)
+
+    setTodos(storage ? todoList : [])
+
+    setId(
+      todoList === null
+        ? 0
+        : todoList.length > 0
+        ? todoList[todoList.length - 1].id + 1
+        : 0,
+    )
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    console.log('변화', todos)
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
+
+  useEffect(() => {
     setFilteredTodos(mapToFilter(todos, filter))
   }, [todos, filter])
 
@@ -33,13 +53,13 @@ TodoContextProvider.propTypes = {
 
 function mapToFilter(todos, filter) {
   switch (filter) {
-    case '전체': {
+    case 'ALL': {
       return todos
     }
-    case '해야할 일': {
+    case 'TODO': {
       return todos.filter((todo) => !todo.isDone)
     }
-    case '끝난 일': {
+    case 'DONE': {
       return todos.filter((todo) => todo.isDone)
     }
     default: {

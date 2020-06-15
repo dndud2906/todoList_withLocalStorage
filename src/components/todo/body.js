@@ -8,20 +8,12 @@ function Body() {
     setTodos(todos.filter((todo) => todo.id !== id))
   }
 
-  const handleUpdateStatus = (todo) => {
-    const updatedTodo = { ...todo, isDone: !todo.isDone }
-
-    const updatedTodos = todos.map((mapTodo) => {
-      let arr = {}
-      if (mapTodo === todo) {
-        mapTodo = updatedTodo
-        arr = mapTodo
-      } else {
-        arr = mapTodo
-      }
-      return arr
-    })
-    setTodos(updatedTodos)
+  const handleUpdateStatus = (id) => {
+    setTodos(
+      todos.map((todo) => {
+        return todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
+      }),
+    )
   }
   return (
     <div>
@@ -33,7 +25,7 @@ function Body() {
             <input
               type="checkbox"
               checked={isDone}
-              onChange={() => handleUpdateStatus(todo)}
+              onChange={() => handleUpdateStatus(id)}
             />
             <span>{title}</span>
             <button onClick={() => handleDeleteTodo(id)}>삭제</button>

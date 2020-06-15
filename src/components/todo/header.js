@@ -22,7 +22,6 @@ function Header() {
     if (text && e.keyCode === 13) {
       const todo = { id: id, title: text, isDone: false }
       setTodos([...todos, todo])
-      // localStorage.setItem('todos', JSON.stringify(todos))
       setId(id + 1)
       setText('')
     }
